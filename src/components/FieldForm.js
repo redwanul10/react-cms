@@ -25,6 +25,8 @@ const FieldForm = (props) => {
         key: "",
         fieldId: uid(20),
         required: false,
+        minChar: null,
+        maxChar: null,
         description: ""
     }
 
@@ -74,52 +76,80 @@ const FieldForm = (props) => {
     return (
         <>
             <div class="form-group">
-                <label for="exampleInputPassword1">Field Title</label>
+                <label>Field Title</label>
                 <input onChange={e => changeInput(e)} name="title" type="text" class="form-control" value={fieldData.title} />
             </div>
 
             {!props.Edit && (<div class="form-group">
-                <label for="exampleInputPassword1">Field Key</label>
+                <label>Field Key</label>
                 <input onChange={e => changeInput(e)} name="key" type="text" class="form-control" value={fieldData.key} />
             </div>)
             }
+
+            <div className="flex_wrapper">
+                <div class="form-group">
+                    <label>Min length</label>
+                    <input onChange={e => changeInput(e)} name="minChar" type="number" class="form-control" value={fieldData.minChar} />
+                </div>
+                <div class="form-group">
+                    <label>Max length </label>
+                    <input onChange={e => changeInput(e)} name="maxChar" type="number" class="form-control" value={fieldData.maxChar} />
+                </div>
+            </div>
+
+            {isRelational && (
+                <div className="flex_wrapper">
+                    <div class="form-group">
+                        <label>Select Relation Type</label>
+                        <Select
+                            options={[
+                                { value: "oneToManu", label: "One To Many" },
+                                { value: "oneToOne", label: "One To One" },
+                                { value: "manyToMany", label: "Many To Many" }
+                            ]}
+                            onInputChange={e => console.log("typing")}
+                            onChange={selected => console.log(selected)}
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label>Select Model</label>
+                        <Select
+                            options={[
+                                { value: "Post", label: "Post" },
+                                { value: "Author", label: "Author" },
+                                { value: "Catagory", label: "Catagory" }
+                            ]}
+                            onInputChange={e => console.log("typing")}
+                            onChange={selected => console.log(selected)}
+                        />
+                    </div>
+                </div>
+            )}
+
             <div class="form-group">
-                <label for="exampleInputPassword1">Field Description</label>
+                <label>Field Description</label>
                 <input onChange={e => changeInput(e)} name="description" type="text" class="form-control" value={fieldData.description} />
             </div>
 
             {/* {(state.selectedField && state.selectedField.type === "Select") && (
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Select Options</label>
+                    <label>Select Options</label>
                     <textarea onChange={e => changeInput(e)} name="options" type="text" class="form-control" value={fieldData.options || ""} cols="20" rows="5"></textarea>
                 </div>
             )} */}
 
             {isSelect && (
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Select Options</label>
+                    <label>Select Options</label>
                     <textarea onChange={e => changeInput(e)} name="options" type="text" class="form-control" value={fieldData.options || ""} cols="20" rows="5"></textarea>
                 </div>
             )}
 
-            {isRelational && (
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Select Relation Type</label>
-                    <Select
-                        options={[
-                            { value: "oneToManu", label: "One To Many" },
-                            { value: "oneToOne", label: "One To One" },
-                            { value: "manyToMany", label: "Many To Many" }
-                        ]}
-                        onInputChange={e => console.log("typing")}
-                        onChange={selected => console.log(selected)}
-                    />
-                </div>
-            )}
+
 
             {/* {state.selectedField.field && state.selectedField.field.type === "Select" && (
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Select Options</label>
+                    <label>Select Options</label>
                     <textarea onChange={e => changeInput(e)} name="options" type="text" class="form-control" value={fieldData.options || state.selectedField.field.options || ""} cols="20" rows="5"></textarea>
                 </div>
             )} */}

@@ -322,6 +322,15 @@ input:checked + .toggle .toggle__handler{
 	border-color: #fff;
 }
 
+.flex_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+.flex_wrapper .form-group{
+  flex: 1
+}
+
 
 .inputFields .form-group label {
   text-transform: capitalize;

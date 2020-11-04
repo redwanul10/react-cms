@@ -4,6 +4,10 @@ import Select from 'react-select'
 const SelectField = (props) => {
 
     console.log(props.options)
+    const option = props.options && props.options.split("\n").map(item => ({
+        value: item,
+        label: item
+    }))
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
@@ -16,8 +20,8 @@ const SelectField = (props) => {
     return (
         <>
             <Select
-                options={options}
-                isMulti
+                options={option || []}
+                // isMulti
                 onInputChange={e => console.log("typing")}
                 onChange={selected => console.log(selected)}
             />
