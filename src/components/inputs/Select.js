@@ -20,10 +20,12 @@ const SelectField = (props) => {
     return (
         <>
             <Select
+
                 options={option || []}
                 // isMulti
+                value={props.selected}
                 onInputChange={e => console.log("typing")}
-                onChange={selected => console.log(selected)}
+                onChange={selected => props.saveData(props.name, selected)}
             />
             {/* <select
                 class="form-control"

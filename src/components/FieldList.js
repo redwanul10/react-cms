@@ -126,7 +126,13 @@ const FieldList = (props) => {
       </Modal>
 
       {/* SORT MODAL */}
-      <Modal open={state.sortModal} focusTrapped={false} onClose={closeSortModal} center>
+      <Modal
+        classNames={{ overlay: "sort_modal" }}
+        open={state.sortModal}
+        focusTrapped={false}
+        onClose={closeSortModal}
+        center
+      >
         <SortNestedField />
       </Modal>
     </>

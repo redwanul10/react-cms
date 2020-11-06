@@ -26,7 +26,7 @@ const AddFields = (props) => {
 
     return (
         <>
-            <AddFieldModal />
+            <AddFieldModal models={props.models} />
             <FieldList
                 onUpdate={handleFieldListUpdate}
             />

@@ -4,7 +4,7 @@ import Modal from 'react-responsive-modal';
 import FieldForm from './FieldForm';
 import InitFieldList from './InitFieldList'
 
-const AddFieldModal = () => {
+const AddFieldModal = (props) => {
     const {
         state,
         closeModal,
@@ -18,7 +18,7 @@ const AddFieldModal = () => {
                 {
                     state.selectedField ? (
                         state.selectedField.type === "Reational" ?
-                            <FieldForm /> : <FieldForm />
+                            <FieldForm {...props} /> : <FieldForm {...props} />
                     ) : <InitFieldList />
                 }
 

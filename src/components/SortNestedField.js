@@ -65,6 +65,7 @@ const SortNestedField = () => {
                             index={index}
                             value={value}
                             contentTypeId={1}
+                            className="highZindex"
                         />
                     ))}
                 </FilterContainer>

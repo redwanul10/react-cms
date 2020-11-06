@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { stateContext } from './StateProvider'
 import Switch from "react-switch";
 import Select from 'react-select'
@@ -29,6 +29,8 @@ const FieldForm = (props) => {
         maxChar: null,
         description: ""
     }
+
+
 
     const [fieldData, setFieldData] = useState(props.Edit ? state.selectedField && state.selectedField.field : initState)
 
@@ -64,14 +66,33 @@ const FieldForm = (props) => {
         }, 2000)
     }
 
+    const setFieldValue = (value, property) => {
+        setFieldData({ ...fieldData, [property]: value })
+    }
+
+
     // Detect is its a SelectedField or Not
-    const isSelect =
+    let isSelect =
         (state.selectedField && state.selectedField.type === "Select") ||
             fieldData.hasOwnProperty("options") ? true : false
 
     // Detect is RelationalField or Not
-    const isRelational =
+    let isRelational =
         state.selectedField && state.selectedField.type === "Reational" ? true : false
+
+    let isTextOrNumber =
+        state.selectedField && ("String" || "Number" || "TextArea") === state.selectedField.type ? true : false
+
+
+    useEffect(() => {
+        if (isRelational) {
+            setFieldData({
+                ...fieldData,
+                relationType: {},
+                model: {}
+            })
+        }
+    }, [])
 
     return (
         <>
@@ -86,41 +107,41 @@ const FieldForm = (props) => {
             </div>)
             }
 
-            <div className="flex_wrapper">
-                <div class="form-group">
-                    <label>Min length</label>
-                    <input onChange={e => changeInput(e)} name="minChar" type="number" class="form-control" value={fieldData.minChar} />
+            {isTextOrNumber && (
+                <div className="flex_wrapper">
+                    <div class="form-group">
+                        <label>Min length</label>
+                        <input onChange={e => changeInput(e)} name="minChar" type="number" class="form-control" value={fieldData.minChar} />
+                    </div>
+                    <div class="form-group">
+                        <label>Max length </label>
+                        <input onChange={e => changeInput(e)} name="maxChar" type="number" class="form-control" value={fieldData.maxChar} />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Max length </label>
-                    <input onChange={e => changeInput(e)} name="maxChar" type="number" class="form-control" value={fieldData.maxChar} />
-                </div>
-            </div>
+            )}
 
             {isRelational && (
                 <div className="flex_wrapper">
                     <div class="form-group">
                         <label>Select Relation Type</label>
                         <Select
+                            value={fieldData.relationType}
                             options={[
-                                { value: "oneToManu", label: "One To Many" },
+                                { value: "oneToMany", label: "One To Many" },
                                 { value: "oneToOne", label: "One To One" },
                                 { value: "manyToMany", label: "Many To Many" }
                             ]}
                             onInputChange={e => console.log("typing")}
-                            onChange={selected => console.log(selected)}
+                            onChange={value => setFieldValue(value, "relationType")}
                         />
                     </div>
                     <div class="form-group">
                         <label>Select Model</label>
                         <Select
-                            options={[
-                                { value: "Post", label: "Post" },
-                                { value: "Author", label: "Author" },
-                                { value: "Catagory", label: "Catagory" }
-                            ]}
+                            value={fieldData.model}
+                            options={props.models}
                             onInputChange={e => console.log("typing")}
-                            onChange={selected => console.log(selected)}
+                            onChange={value => setFieldValue(value, "model")}
                         />
                     </div>
                 </div>
@@ -141,7 +162,15 @@ const FieldForm = (props) => {
             {isSelect && (
                 <div class="form-group">
                     <label>Select Options</label>
-                    <textarea onChange={e => changeInput(e)} name="options" type="text" class="form-control" value={fieldData.options || ""} cols="20" rows="5"></textarea>
+                    <textarea onChange={e => {
+                        const option = e.target.value.split("\n").map(item => ({
+                            value: item,
+                            label: item
+                        }))
+                        console.log(option)
+                        // setFieldValue(option, "options")
+                        changeInput(e)
+                    }} name="options" type="text" class="form-control" value={fieldData.options || ""} cols="20" rows="5"></textarea>
                 </div>
             )}
 

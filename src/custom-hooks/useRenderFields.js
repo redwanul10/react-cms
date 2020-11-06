@@ -384,7 +384,11 @@ const useFields = (ok2, ok, toggleInput, parent) => {
                         name={field.key}
                         onChange={handleSelect}
                         rerender={isSubmit ? isSubmit : renderEditor}
-                        value={fieldData[field.key] || ""}
+                        selected={fieldData[field.key] || ""}
+                        saveData={saveData}
+                        getRelationalData={fieldOptions.getRelationalDDL_Data}
+                        selectedModel={field.model}
+                        relationType={field.relationType}
                     />
                 )
 
@@ -453,22 +457,20 @@ const useFields = (ok2, ok, toggleInput, parent) => {
                         onChange={changeInput}
                         errorMsg={errors[field.key] || ""}
                         rerender={submited}
+                        saveData={saveData}
                     />
                 )
 
             case 'Boolean':
                 return (
 
-                    <label>
-                        <SwitchButton
-                            saveData={saveData}
-                            name={field.key}
-                            value={fieldData[field.key] || false}
-                            errorMsg={errors[field.key] || ""}
-                            rerender={submited}
-                        />
-                    </label>
-
+                    <SwitchButton
+                        saveData={saveData}
+                        name={field.key}
+                        value={fieldData[field.key] || false}
+                        errorMsg={errors[field.key] || ""}
+                        rerender={submited}
+                    />
                 )
 
             default:

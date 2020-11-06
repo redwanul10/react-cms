@@ -84,6 +84,11 @@ function App() {
       {/* <CreatContentType /> */}
       {/* <FieldList /> */}
       <AddFields
+        models={[
+          { value: 'Blog', label: 'Blog' },
+          { value: 'Catagory', label: 'Catagory' },
+          { value: 'Author', label: 'Author' },
+        ]}
         onSubmit={MODEL => setFields({ ...MODEL })}
         onUpdate={updatedModel => {
           // alert(JSON.stringify(updatedModel, null, 2))
@@ -105,6 +110,14 @@ function App() {
         fieldValue={value}
         media={media}
         textEditor={textEditorOptions}
+        getRelationalDDL_Data={(type, setValue) => {
+          const options = [
+            { value: 'catagory', label: 'catagory' },
+            { value: 'catagory 2', label: 'catagory 2' },
+            { value: 'catagory 3', label: 'catagory 3' },
+          ];
+          setTimeout(() => setValue(options), 8000)
+        }}
         onSubmit={(data) => {
           alert(JSON.stringify(data, null, 2))
           setPost([...post, data])

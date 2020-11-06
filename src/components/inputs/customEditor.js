@@ -49,7 +49,9 @@ const CustomSun = (props) => {
         window[props.name] = editor.current
 
         setTimeout(() => {
-            document.querySelector(`.richTextEditor${props.name} .Redwan`).addEventListener('click', (e) => {
+            const elem = document.querySelector(`.richTextEditor${props.name} .Redwan`)
+            if (!elem) return
+            elem.addEventListener('click', (e) => {
                 e.stopPropagation()
                 setModal(true)
             }, 1000)

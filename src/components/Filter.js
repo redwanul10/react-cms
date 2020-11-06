@@ -20,7 +20,7 @@ export const FilterContainer = sortableContainer(({ children }) => {
 });
 
 
-export const FilterItem = sortableElement(React.memo(({ value, contentTypeId }) => {
+export const FilterItem = sortableElement(React.memo(({ value, contentTypeId, className }) => {
 
   const {
     deleteField,
@@ -49,7 +49,7 @@ export const FilterItem = sortableElement(React.memo(({ value, contentTypeId }) 
 
   const renderField = (field, id) => {
     return (
-      <div class={`list-group-item list-group-item-action ${field.type === "Repeatable" ? "repeatable" : ""}`}>
+      <div class={`list-group-item list-group-item-action ${className} ${field.type === "Repeatable" ? "repeatable" : ""}`}>
         <DragHandle />
         {field.title}
         {/* <div className="icons_wrapper"> */}
