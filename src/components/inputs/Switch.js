@@ -6,7 +6,8 @@ const Switch = (props) => {
 
     useEffect(() => {
         // setTimeout(() => props.saveData(props.name, ""), 100)
-    }, [props.rerender])
+        props.saveData(props.name, props.value || false)
+    }, [])
 
     return (
         <>

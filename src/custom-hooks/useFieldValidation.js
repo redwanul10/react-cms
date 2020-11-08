@@ -12,8 +12,8 @@ const useFieldValidation = () => {
                 if (item.type !== "Repeatable") {
                     validation[item.key] = {
                         required: item.required,
-                        min: item.min || 5,
-                        max: item.max || null
+                        min: item.minChar|| 0,
+                        max: item.maxChar|| 0
                     }
                 } if (item.type !== "Repeatable" && item.fields) {
                     recursion(item.fields)
@@ -51,7 +51,8 @@ const useFieldValidation = () => {
 
                 const value = values[key];
                 const isRequired = validations[key] ? validations[key].required : false
-                const min = validations[key] ? validations[key].min : 0
+                const min = validations[key] ? validations[key].min: 0
+                const max = validations[key] ? validations[key].max: 0
 
                 if (validations.hasOwnProperty(key)) {
 
@@ -78,6 +79,9 @@ const useFieldValidation = () => {
                         } else if (min && value.length < min) {
                             error = true
                             errorMsg[key] = "Min"
+                        } else if (max && value.length > max) {
+                            error = true
+                            errorMsg[key] = "Max"
                         } else {
                             errorMsg[key] = ""
                         }
