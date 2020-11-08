@@ -122,6 +122,7 @@ const FieldList = (props) => {
 
       {/* EDIT MODAL */}
       <Modal open={state.editModal} focusTrapped={false} onClose={closeEditModal} center>
+      <h2 className="modal_title">Edit Field</h2>
         <FieldForm Edit contentTypeId={1} />
       </Modal>
 
