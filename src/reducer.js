@@ -27,7 +27,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 editModal: true,
-                selectedField: action.payload
+                selectedField: action.payload.field
             }
         case "CLOSE_EDIT_MODAL":
             return {
@@ -196,6 +196,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 updateFieldList: !state.updateFieldList,
+                editModal: false,
                 fieldDataUpdated: true
             }
         case "Disable_FieldData_Update":

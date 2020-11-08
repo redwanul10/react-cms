@@ -32,7 +32,7 @@ const FieldForm = (props) => {
 
 
 
-    const [fieldData, setFieldData] = useState(props.Edit ? state.selectedField && state.selectedField.field : initState)
+    const [fieldData, setFieldData] = useState(props.Edit ? state.selectedField && state.selectedField : initState)
 
     const changeInput = (e) => {
 
@@ -88,8 +88,8 @@ const FieldForm = (props) => {
         if (isRelational) {
             setFieldData({
                 ...fieldData,
-                relationType: {},
-                model: {}
+                relationType: state.selectedField.relationType ||{},
+                model: state.selectedField.model ||{}
             })
         }
     }, [])
