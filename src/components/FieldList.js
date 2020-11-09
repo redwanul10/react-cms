@@ -60,16 +60,11 @@ import React, { useContext, useEffect, useState, useMemo } from 'react';
 import { stateContext } from './StateProvider'
 import arrayMove from 'array-move';
 import { FilterContainer, FilterItem } from './Filter';
-import Modal from 'react-responsive-modal';
-import FieldForm from './FieldForm';
-import SortNestedField from './SortNestedField';
 
 const FieldList = (props) => {
   const {
     state,
     dispatch,
-    closeEditModal,
-    closeSortModal
   } = useContext(stateContext)
 
   // const [fields, setFields] = useState([])
@@ -119,23 +114,6 @@ const FieldList = (props) => {
           ))}
         </FilterContainer>
       </div>
-
-      {/* EDIT MODAL */}
-      <Modal open={state.editModal} focusTrapped={false} onClose={closeEditModal} center>
-      <h2 className="modal_title">Edit Field</h2>
-        <FieldForm Edit contentTypeId={1} />
-      </Modal>
-
-      {/* SORT MODAL */}
-      <Modal
-        classNames={{ overlay: "sort_modal" }}
-        open={state.sortModal}
-        focusTrapped={false}
-        onClose={closeSortModal}
-        center
-      >
-        <SortNestedField />
-      </Modal>
     </>
   );
 }

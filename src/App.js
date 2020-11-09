@@ -92,7 +92,7 @@ function App() {
         onSubmit={MODEL => setFields({ ...MODEL })}
         onUpdate={updatedModel => {
           // alert(JSON.stringify(updatedModel, null, 2))
-          setFields({ ...updatedModel })
+          // setFields({ ...updatedModel })
         }}
       />
 
