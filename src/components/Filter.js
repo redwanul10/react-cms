@@ -107,7 +107,12 @@ export const FilterItem = sortableElement(React.memo(({ value, contentTypeId, cl
           </div>
 
         )}
-
+        <div className="inv_elm"></div>
+        <div className="ddL_menu">
+          <a className="ddl_item" href="#">Action</a>
+          <a className="ddl_item" href="#">Another Action</a>
+          <a className="ddl_item" href="#">Final</a>
+        </div>
       </div>
     )
   }

@@ -51,6 +51,7 @@ const AddFields = (props) => {
             >
                 <SortNestedField />
             </Modal>
+
             <button onClick={activeModal}>Add Field</button>
             <button onClick={e => props.onSubmit(state.contentTypes)}>get result</button>
         </>
