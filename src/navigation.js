@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import AddFields from "./components/AddFields";
 import CreatContentType from "./components/createContentType";
 import DisplayInputFields from "./components/DisplayInputFields";
+import Landing from "./pages/Landing";
 
 export default function Navigation(props) {
   const {
@@ -14,11 +15,44 @@ export default function Navigation(props) {
     media,
     textEditorOptions,
     onSubmit,
+    posts,
   } = props;
   return (
     <Routes>
       <Route
         path="/content/:type"
+        element={
+          <Landing
+            posts={posts}
+            schema={fields[currentIndex] || {}}
+            setFields={setFields}
+          />
+        }
+      />
+      <Route
+        path="/content/:type/create"
+        element={
+          <DisplayInputFields
+            model={fields[currentIndex] || {}}
+            jsonValue={JSON.stringify(fields[currentIndex] || {})}
+            fieldValue={value}
+            media={media}
+            textEditor={textEditorOptions}
+            getRelationalDDL_Data={(type, setValue) => {
+              const options = [
+                { value: "catagory", label: "catagory" },
+                { value: "catagory 2", label: "catagory 2" },
+                { value: "catagory 3", label: "catagory 3" },
+              ];
+              setTimeout(() => setValue(options), 8000);
+            }}
+            onSubmit={onSubmit}
+            setFields={setFields}
+          />
+        }
+      />
+      <Route
+        path="/content/:type/edit"
         element={
           <DisplayInputFields
             model={fields[currentIndex] || {}}

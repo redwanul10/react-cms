@@ -9,6 +9,7 @@
     "deepmerge": "^4.2.2",
     "jodit-react": "^1.0.42",
     "quill": "^1.3.7",
+    "rc-table": "^7.28.2",
     "react": "^16.13.0",
     "react-accessible-accordion": "^5.0.0",
     "react-autosuggest": "^10.0.2",

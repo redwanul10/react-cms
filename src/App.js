@@ -129,6 +129,7 @@ function App() {
             <Navigation
               setFields={setFields}
               // content page props
+              posts={post}
               fields={fields}
               currentIndex={currentIndex}
               value={value}
