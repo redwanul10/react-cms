@@ -13,6 +13,7 @@ const AddFields = (props) => {
     closeEditModal,
     closeSortModal,
     createContentType,
+    activeIndex,
   } = useContext(stateContext);
 
   useEffect(() => {
@@ -27,11 +28,21 @@ const AddFields = (props) => {
     props.onUpdate(contentTypes);
   };
 
+  const handleSave = () => {
+    if (props.onSave) props.onSave(state.contentTypes[state.activeIndex]);
+  };
+
   return (
     <>
       <button onClick={activeModal}>Add Field</button>
+      <button onClick={handleSave}>save</button>
 
-      <AddFieldModal models={props.models} />
+      <AddFieldModal
+        models={state?.contentTypes?.map((item) => ({
+          value: item.name,
+          label: item.name,
+        }))}
+      />
       <FieldList onUpdate={handleFieldListUpdate} />
       {/* EDIT MODAL */}
       <Modal

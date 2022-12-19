@@ -10,7 +10,7 @@ const FieldList = () => {
 
   const onSortEndHandler = ({ oldIndex, newIndex }) => {
     const sortedList = arrayMove(
-      state.contentTypes[0].fields,
+      state?.contentTypes[state.activeIndex]?.fields,
       oldIndex,
       newIndex
     );
@@ -34,20 +34,24 @@ const FieldList = () => {
   return (
     <>
       <div class="col-md-3 offset-md-1">
-        <FilterContainer
-          onSortStart={onSortStart}
-          onSortEnd={onSortEndHandler}
-          useDragHandle
-        >
-          {state.contentTypes[state.activeIndex].fields.map((value, index) => (
-            <FilterItem
-              key={`item-${index}`}
-              index={index}
-              value={value}
-              contentTypeId={1}
-            />
-          ))}
-        </FilterContainer>
+        {state?.contentTypes?.length && (
+          <FilterContainer
+            onSortStart={onSortStart}
+            onSortEnd={onSortEndHandler}
+            useDragHandle
+          >
+            {state?.contentTypes[state.activeIndex]?.fields.map(
+              (value, index) => (
+                <FilterItem
+                  key={`item-${index}`}
+                  index={index}
+                  value={value}
+                  contentTypeId={1}
+                />
+              )
+            )}
+          </FilterContainer>
+        )}
       </div>
 
       <Modal open={state.editModal} onClose={closeEditModal} center>

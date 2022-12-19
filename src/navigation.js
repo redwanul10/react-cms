@@ -4,11 +4,12 @@ import AddFields from "./components/AddFields";
 import CreatContentType from "./components/createContentType";
 import DisplayInputFields from "./components/DisplayInputFields";
 import Landing from "./pages/Landing";
+import * as API from "./request";
 
 export default function Navigation(props) {
   const {
     setFields,
-
+    setValue,
     fields,
     currentIndex,
     value,
@@ -38,13 +39,12 @@ export default function Navigation(props) {
             fieldValue={value}
             media={media}
             textEditor={textEditorOptions}
-            getRelationalDDL_Data={(type, setValue) => {
-              const options = [
-                { value: "catagory", label: "catagory" },
-                { value: "catagory 2", label: "catagory 2" },
-                { value: "catagory 3", label: "catagory 3" },
-              ];
-              setTimeout(() => setValue(options), 8000);
+            getRelationalDDL_Data={async (type, setValue) => {
+              const data = await API.getLandingData(type.value);
+
+              setValue(
+                data.map((item) => ({ value: item?._id, label: item?.name }))
+              );
             }}
             onSubmit={onSubmit}
             setFields={setFields}
@@ -60,16 +60,16 @@ export default function Navigation(props) {
             fieldValue={value}
             media={media}
             textEditor={textEditorOptions}
-            getRelationalDDL_Data={(type, setValue) => {
-              const options = [
-                { value: "catagory", label: "catagory" },
-                { value: "catagory 2", label: "catagory 2" },
-                { value: "catagory 3", label: "catagory 3" },
-              ];
-              setTimeout(() => setValue(options), 8000);
+            getRelationalDDL_Data={async (type, setValue) => {
+              const data = await API.getLandingData(type.value);
+
+              setValue(
+                data.map((item) => ({ value: item?._id, label: item?.name }))
+              );
             }}
             onSubmit={onSubmit}
             setFields={setFields}
+            setValue={setValue}
           />
         }
       />
@@ -84,6 +84,13 @@ export default function Navigation(props) {
               { value: "Catagory", label: "Catagory" },
               { value: "Author", label: "Author" },
             ]}
+            onSave={(modelSchema) => {
+              console.log(modelSchema);
+              API.seaveModel({
+                name: modelSchema.name,
+                schema: modelSchema.fields,
+              });
+            }}
             onSubmit={(MODEL) => {
               console.log("====== MMMM =====", MODEL);
               setFields({ ...MODEL });

@@ -33,7 +33,7 @@ const Navbar = (props) => {
               Create
             </span>
           )}
-          {state.contentTypes.map((contentType, i) => (
+          {state?.contentTypes?.map((contentType, i) => (
             <span
               onClick={(e) => handleClick(i)}
               // class="list-group-item list-group-item-action"

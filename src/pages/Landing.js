@@ -1,40 +1,8 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Table from "rc-table";
 import { Link, useParams } from "react-router-dom";
 import { stateContext } from "../components/StateProvider";
-
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-    width: 100,
-    render: (value) => <div className="column1">{value}</div>,
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-    width: 100,
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-    width: 200,
-  },
-  {
-    title: "Operations",
-    dataIndex: "",
-    key: "operations",
-    render: () => (
-      <>
-        <Link to="/content/post/create">Edit</Link>
-        <Link to="/content/post/create">View</Link>
-      </>
-    ),
-  },
-];
+import * as API from "../request";
 
 const generateColumns = (list, type) => {
   if (!list) return;
@@ -59,10 +27,10 @@ const generateColumns = (list, type) => {
     title: "Operations",
     dataIndex: "",
     key: "operations",
-    render: () => (
+    render: (value, row, index) => (
       <>
-        <Link to={`/content/${type}/create`}>Edit</Link>
-        <Link to={`/content/${type}/create`}>View</Link>
+        <Link to={`/content/${type}/edit?id=${value?._id}`}>Edit</Link>
+        <Link to={`/content/${type}/view?id=${value?._id}`}>View</Link>
       </>
     ),
   });
@@ -70,19 +38,23 @@ const generateColumns = (list, type) => {
   return col;
 };
 
-const data = [
-  { name: "Jack", age: 28, address: "some where", key: "1" },
-  { name: "Rose", age: 36, address: "some where", key: "2" },
-];
 export default function Landing(props) {
-  console.log(props.schema, "schema");
-
   const { state } = useContext(stateContext);
   const params = useParams();
+  const [landingData, setLandingData] = useState([]);
 
   useEffect(() => {
-    props.setFields(state.contentTypes);
+    props.setFields(state?.contentTypes);
   }, [params?.type]);
+
+  const fetchLandingPageData = async () => {
+    const data = await API.getLandingData(params?.type);
+    setLandingData(data);
+  };
+
+  useEffect(() => {
+    fetchLandingPageData();
+  }, []);
 
   const cols = useMemo(
     () => generateColumns(props.schema.fields, params?.type),
@@ -93,7 +65,7 @@ export default function Landing(props) {
     <div style={{ padding: "15px" }}>
       <Link to={`/content/${params?.type}/create`}>Create</Link>
 
-      <Table columns={cols} data={props.posts} />
+      <Table columns={cols} data={landingData} />
     </div>
   );
 }

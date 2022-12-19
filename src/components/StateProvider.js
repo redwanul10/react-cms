@@ -1,5 +1,6 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import reducer from "../reducer";
+import * as API from "../request";
 
 export const stateContext = createContext();
 
@@ -37,53 +38,54 @@ const initState = {
   editModal: false,
   editField: false,
   errors: {},
-  contentTypes: [
-    {
-      name: "post",
-      id: 1,
-      fields: [
-        {
-          required: true,
-          description: "",
-          fieldId: "sdfsfwerwer",
-          key: "image",
-          title: "image",
-          type: "File",
-          value: "",
-        },
-        {
-          required: true,
-          description: "",
-          fieldId: "vxlfvu1dsfwwwi32j5bly2bpij",
-          key: "description",
-          title: "Description",
-          type: "RichTextEditor",
-          value: "",
-        },
-        {
-          required: true,
-          minChar: 5,
-          maxChar: 10,
-          description: "",
-          fieldId: "vxlfvu1i32jfdw5bly2bpij",
-          key: "author",
-          title: "author",
-          type: "String",
-          value: "",
-        },
-        {
-          required: true,
-          description: "",
-          fieldId: "vxlfvu1i32j5dfhdfgdwewbly2bpij",
-          key: "created",
-          title: "created",
-          type: "DatePicker",
-          value: "",
-        },
-      ],
-      type: "Repeatable",
-    },
-  ],
+  ContentTypes: [],
+  // contentTypes: [
+  //   {
+  //     name: "post",
+  //     id: 1,
+  //     fields: [
+  //       {
+  //         required: true,
+  //         description: "",
+  //         fieldId: "sdfsfwerwer",
+  //         key: "image",
+  //         title: "image",
+  //         type: "File",
+  //         value: "",
+  //       },
+  //       {
+  //         required: true,
+  //         description: "",
+  //         fieldId: "vxlfvu1dsfwwwi32j5bly2bpij",
+  //         key: "description",
+  //         title: "Description",
+  //         type: "RichTextEditor",
+  //         value: "",
+  //       },
+  //       {
+  //         required: true,
+  //         minChar: 5,
+  //         maxChar: 10,
+  //         description: "",
+  //         fieldId: "vxlfvu1i32jfdw5bly2bpij",
+  //         key: "author",
+  //         title: "author",
+  //         type: "String",
+  //         value: "",
+  //       },
+  //       {
+  //         required: true,
+  //         description: "",
+  //         fieldId: "vxlfvu1i32j5dfhdfgdwewbly2bpij",
+  //         key: "created",
+  //         title: "created",
+  //         type: "DatePicker",
+  //         value: "",
+  //       },
+  //     ],
+  //     type: "Repeatable",
+  //   },
+  // ],
   newContentType: null,
 };
 
@@ -130,6 +132,18 @@ const StateProvider = (props) => {
 
   const selectContentType = (index) =>
     dispatch({ type: "SELECT_CONTENT_TYPE", payload: { index } });
+
+  const setInitcontentTypes = (contentTypes) =>
+    dispatch({ type: "INIAt_CONTENT_TYPE", payload: { contentTypes } });
+
+  const getAllModels = async () => {
+    const models = await API.getModels();
+    console.log(models);
+    setInitcontentTypes(models);
+  };
+  useEffect(() => {
+    getAllModels();
+  }, []);
 
   const value = {
     state,

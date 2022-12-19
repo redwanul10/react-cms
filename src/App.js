@@ -17,6 +17,7 @@ import {
 } from "react-accessible-accordion";
 import { BrowserRouter } from "react-router-dom";
 import Navigation from "./navigation";
+import * as API from "./request";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -128,6 +129,7 @@ function App() {
           <div className="main">
             <Navigation
               setFields={setFields}
+              setValue={setValue}
               // content page props
               posts={post}
               fields={fields}
@@ -135,9 +137,11 @@ function App() {
               value={value}
               media={media}
               textEditorOptions={textEditorOptions}
-              onSubmit={(data) => {
-                alert(JSON.stringify(data, null, 2));
-                setPost([...post, data]);
+              onSubmit={(moduleData, moduleName) => {
+                API.saveContent(moduleName, moduleData);
+                // console.log("======", moduleName, "=====");
+                // alert(JSON.stringify(data, null, 2));
+                // setPost([...post, data]);
               }}
             />
             {/* <AddFields

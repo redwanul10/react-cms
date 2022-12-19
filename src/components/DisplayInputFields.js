@@ -104,7 +104,8 @@ import useFieldValidation from "../custom-hooks/useFieldValidation";
 import getEmtyValue from "../utill/getEmtyValue";
 import getFieldsLength from "../utill/getFieldsLength";
 import merge from "deepmerge";
-import { useParams } from "react-router-dom";
+import * as API from "../request";
+import { useLocation, useParams } from "react-router-dom";
 
 const DisplayInputFields = (props) => {
   const { state, dispatch, toggleSubmit, saveErrors, reInitSectionValue } =
@@ -115,6 +116,20 @@ const DisplayInputFields = (props) => {
   const [textObj, setTextObj] = useState('{"fields":[]}');
   const [emty, setEmty] = useState({});
   const params = useParams();
+  const { search } = useLocation();
+
+  const getContent = async (id) => {
+    const data = await API.getContentDetails(params.type, id);
+    props.setValue(data);
+  };
+  useEffect(() => {
+    const url = new URLSearchParams(search);
+    let id = url.get("id");
+    if (id) getContent(id);
+    return () => {
+      if (props.setValue) props.setValue({});
+    };
+  }, [search]);
 
   useEffect(() => {
     props.setFields(state.contentTypes);
@@ -180,7 +195,7 @@ const DisplayInputFields = (props) => {
     const { error, errorMsg } = validateValues(customHooks.fieldData);
 
     if (!error) {
-      props.onSubmit(customHooks.fieldData);
+      props.onSubmit(customHooks.fieldData, props.model.name);
       customHooks.submit(emtyValue);
       reInitSectionValue(emtyValue);
       toggleSubmit();

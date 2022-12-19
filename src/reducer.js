@@ -268,6 +268,13 @@ const reducer = (state, action) => {
         activeIndex: action.payload.index,
       };
 
+    case "INIAt_CONTENT_TYPE":
+      console.log(action.payload.contentTypes);
+      return {
+        ...state,
+        contentTypes: action.payload.contentTypes,
+      };
+
     default:
       return state;
   }
