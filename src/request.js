@@ -1,7 +1,13 @@
 import Axios from "axios";
 
 export const seaveModel = async (model) => {
-  const res = await Axios.post("/module", model);
+  console.log(model);
+  const relational = [];
+  model.schema.forEach((field) => {
+    if (field.type === "Reational") relational.push(field.model.value);
+  });
+  console.log(relational);
+  const res = await Axios.post("/module", { ...model, relational });
   console.log("success fully created", res.data);
 };
 
